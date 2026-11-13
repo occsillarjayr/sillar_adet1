@@ -1,9 +1,15 @@
-import "@/global.css";
 
 import { Stack } from "expo-router";
+import { AppProvider } from "../services/AppContext";
 
 export default function RootLayout() {
-  return <Stack screenOptions={{
-    headerShown: false
-  }} />;
+  return (
+    <AppProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="(authenticated)" />
+        <Stack.Screen name="(unauthenticated)" />
+      </Stack>
+    </AppProvider>
+  );
 }

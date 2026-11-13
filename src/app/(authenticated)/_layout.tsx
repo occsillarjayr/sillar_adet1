@@ -1,14 +1,11 @@
+
 import { Stack } from "expo-router";
 
-export default function DefaultLayout() {
+export default function AuthenticatedLayout() {
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{
-        headerShown: false
-      }} />
-      <Stack.Screen name="posts/create" options={{
-        headerTitle: "Create Post"
-      }} />
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="posts" />
     </Stack>
-  )
+  );
 }

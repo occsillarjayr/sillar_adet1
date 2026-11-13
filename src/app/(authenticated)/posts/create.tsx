@@ -1,30 +1,47 @@
-import Button from '@/src/components/button'
-import Input from '@/src/components/input'
-import axios from 'axios'
-import { router } from 'expo-router'
-import { useState } from 'react'
-import { View } from 'react-native'
 
-export default function Create() {
-    const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
-    const [image, setImage] = useState("")
+import React from "react";
 
-    const createPost = async () => {
-        try {
-            await axios.post('https://6af3f9fe55a1de7dcf03745a.mockapi.io/api/products/items', { name, description, image })
-            router.back()
-        } catch (error) {
-            console.log(error)
-        }
-    }
+import { View, Text, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
 
-    return (
-        <View className='p-6 gap-4'>
-            <Input label='Name' onChangeText={(value) => setName(value)} />
-            <Input label='Description' onChangeText={(value) => setDescription(value)} />
-            <Input label='Image Url' onChangeText={(value) => setImage(value)} />
-            <Button label='Create Post' onPress={createPost} />
-        </View>
-    )
+import PostForm from "../../../components/PostForm";
+import { useApp } from "../../../services/AppContext";
+
+export default function CreatePost() {
+
+  const router = useRouter();
+  const { addPost } = useApp();
+
+  // Create new post
+  const handleCreate = (title: string, content: string) => {
+
+    addPost(title, content);
+
+    router.replace("/posts");
+  };
+
+  return (
+    <View style={styles.container}>
+
+      <Text style={styles.title}>Create New Post</Text>
+
+      <PostForm
+        submitLabel="Create Post"
+        onSubmit={handleCreate}
+      />
+
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 20
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center"
+  }
+});

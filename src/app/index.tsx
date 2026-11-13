@@ -1,17 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
+
+import { Redirect } from "expo-router";
+import { useApp } from "../services/AppContext";
 
 export default function Index() {
-  return (
-    <View style={styles.container}>
-      <Text>Edit src/app/index.tsx to edit this screen.</Text>
-    </View>
-  );
-}
+  const { isLoggedIn } = useApp();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+  // Check login status
+  if (isLoggedIn) {
+    return <Redirect href="/(authenticated)/(tabs)/home" />;
+  }
+
+  return <Redirect href="/(unauthenticated)/login" />;
+}
